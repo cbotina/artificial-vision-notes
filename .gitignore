@@ -1,0 +1,45 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdfsync
+
+# Index files
+*.idx
+*.ilg
+*.ind
+
+# Bibliography files
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Other LaTeX files
+*.auxlock
+*.lol
+*.nav
+*.snm
+*.vrb
+*.figlist
+*.makefile
+*.figlist
+
+# Keep specific source files
+!index.tex
+!*.tex
+
+# Generated PDFs (optional - uncomment if you want to exclude PDFs)
+# *.pdf
+
+# Generated images from notebooks
+img/
+
+# Other files
+.DS_Store

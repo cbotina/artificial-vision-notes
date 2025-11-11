@@ -1,0 +1,93 @@
+\section{The Nyquist-Shannon Sampling Theorem}
+
+The Nyquist-Shannon sampling theorem, also known as the sampling theorem, is a fundamental principle in signal processing and digital image processing. It establishes the conditions under which a continuous signal can be perfectly reconstructed from its discrete samples.
+
+\subsection{Statement of the Theorem}
+
+\begin{theorem}[Nyquist-Shannon Sampling Theorem]
+If a function $x(t)$ contains no frequencies higher than $B$ hertz, it is completely determined by giving its ordinates at a series of points spaced $\frac{1}{2B}$ seconds apart. In other words, a band-limited signal can be perfectly reconstructed from its samples if the sampling frequency $f_s$ satisfies:
+\begin{equation}
+f_s \geq 2f_{\text{max}}
+\label{eq:nyquist}
+\end{equation}
+where $f_{\text{max}}$ is the highest frequency component in the signal. The frequency $f_N = \frac{f_s}{2}$ is called the \textbf{Nyquist frequency}, and $2f_{\text{max}}$ is called the \textbf{Nyquist rate}.
+\end{theorem}
+
+\subsection{Understanding Sampling in the Time Domain}
+
+To understand the theorem, consider a continuous signal $x(t)$ that we wish to sample at regular intervals. The sampling process can be visualized as multiplying the continuous signal by a train of Dirac delta functions:
+
+\begin{equation}
+x_s(t) = x(t) \cdot \sum_{n=-\infty}^{\infty} \delta(t - nT_s)
+\end{equation}
+
+where $T_s = \frac{1}{f_s}$ is the sampling period.
+
+Figure~\ref{fig:sampling_comparison} illustrates three different sampling scenarios:
+\begin{itemize}
+    \item \textbf{Adequate sampling} ($f_s > 2f_{\text{max}}$): The signal can be perfectly reconstructed.
+    \item \textbf{Nyquist rate sampling} ($f_s = 2f_{\text{max}}$): The minimum sampling rate that theoretically allows perfect reconstruction.
+    \item \textbf{Insufficient sampling} ($f_s < 2f_{\text{max}}$): Aliasing occurs, and the original signal cannot be recovered.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{img/nyquist_sampling_comparison.png}
+    \caption{Comparison of different sampling rates: adequate sampling (top), Nyquist rate (middle), and insufficient sampling leading to aliasing (bottom).}
+    \label{fig:sampling_comparison}
+\end{figure}
+
+\subsection{Frequency Domain Interpretation}
+
+In the frequency domain, sampling creates periodic replicas of the original spectrum. The Fourier transform of the sampled signal $X_s(f)$ consists of copies of the original spectrum $X(f)$ shifted by integer multiples of the sampling frequency:
+
+\begin{equation}
+X_s(f) = f_s \sum_{k=-\infty}^{\infty} X(f - kf_s)
+\end{equation}
+
+For perfect reconstruction, these replicas must not overlap. This requires that the sampling frequency satisfies the Nyquist criterion. Figure~\ref{fig:frequency_domain} shows how sampling affects the frequency spectrum:
+
+\begin{itemize}
+    \item When $f_s > 2f_{\text{max}}$, the replicas are separated and can be filtered out.
+    \item When $f_s < 2f_{\text{max}}$, the replicas overlap, causing \textbf{aliasing}—high frequencies appear as lower frequencies in the sampled signal.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{img/nyquist_frequency_domain.png}
+    \caption{Frequency domain representation: original spectrum (top), sampling above Nyquist rate with separated replicas (middle), and sampling below Nyquist rate with overlapping replicas causing aliasing (bottom).}
+    \label{fig:frequency_domain}
+\end{figure}
+
+\subsection{The Nyquist Criterion}
+
+The relationship between the signal's maximum frequency and the required sampling frequency can be visualized as shown in Figure~\ref{fig:nyquist_criterion}. The region above the line $f_s = 2f_{\text{max}}$ represents safe sampling conditions where no aliasing occurs.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/nyquist_criterion.png}
+    \caption{Visual representation of the Nyquist criterion. The green region (above the blue line) represents safe sampling conditions, while the red region (below the line) leads to aliasing.}
+    \label{fig:nyquist_criterion}
+\end{figure}
+
+\subsection{Applications in Computer Vision}
+
+The Nyquist-Shannon theorem has critical implications in computer vision:
+
+\begin{itemize}
+    \item \textbf{Image acquisition}: Digital cameras must sample at a rate sufficient to capture the highest spatial frequencies in the scene. Insufficient sampling leads to aliasing artifacts such as moiré patterns.
+    \item \textbf{Image resampling}: When resizing or rotating images, care must be taken to avoid aliasing by proper filtering before downsampling.
+    \item \textbf{Feature detection}: Understanding sampling theory helps in designing filters and feature detectors that work correctly with discrete image data.
+\end{itemize}
+
+\subsection{Anti-aliasing}
+
+To prevent aliasing when sampling, an \textbf{anti-aliasing filter} (low-pass filter) is typically applied before sampling to remove frequency components above the Nyquist frequency. This ensures that the signal is band-limited and satisfies the conditions of the sampling theorem.
+
+In practice, perfect reconstruction requires:
+\begin{enumerate}
+    \item Band-limiting the signal to frequencies below $f_N = \frac{f_s}{2}$ using an anti-aliasing filter.
+    \item Sampling at a rate $f_s \geq 2f_{\text{max}}$.
+    \item Reconstructing using an ideal low-pass filter (sinc interpolation) or appropriate interpolation methods.
+\end{enumerate}
+
