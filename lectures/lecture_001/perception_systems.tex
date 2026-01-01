@@ -1,0 +1,198 @@
+\section{Perception Systems}
+
+\subsection{Auditive System}
+
+\textbf{Sound} is defined as a mechanical disturbance of an elastic medium that propagates in the form of a wave. Sound results from the back-and-forth vibration of particles in the medium through which the wave travels. For example, when a sound wave moves from left to right through air, the air particles oscillate back and forth as the wave's energy passes through them.
+
+The physical characterization of sound enables its measurement and quantitative evaluation across different phenomena. Two key quantities are used to describe sound:
+
+\subsubsection{Acoustic Intensity}
+
+The \textbf{acoustic intensity} of a sound wave is given by the average rate at which acoustic energy flows through a unit area. It is measured in watts per square meter (W/m²). This quantity describes how much acoustic power is transmitted per unit area perpendicular to the direction of wave propagation.
+
+\subsubsection{Sound Intensity Level}
+
+\textbf{Sound levels} measure sound energy using the decibel (dB) scale. The \textbf{intensity level} (NI, from Spanish "Nivel de intensidad") is defined as:
+
+\begin{equation}
+\text{NI} = 10\log_{10}\left(\frac{I}{I_{\text{ref}}}\right)
+\label{eq:sound_intensity_level}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $I$ is the acoustic intensity of the sound wave being measured (in W/m²)
+    \item $I_{\text{ref}}$ is the reference intensity
+\end{itemize}
+
+The \textbf{reference intensity} $I_{\text{ref}}$ represents the threshold of audibility at 1 kHz in free air. This is the minimum sound intensity that a typical human ear can detect at a frequency of 1000 Hz. Its value is:
+
+\begin{equation}
+I_{\text{ref}} = 10^{-12} \text{ W/m²}
+\label{eq:reference_intensity}
+\end{equation}
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=\textbf{Understanding Decibels}]
+The decibel (dB) scale is logarithmic, which means it compresses a wide range of intensity values into a more manageable scale. This is particularly useful for sound because human perception of loudness is also logarithmic—we perceive equal ratios of intensity as equal changes in loudness.
+
+\textbf{Key points:}
+\begin{itemize}
+    \item A sound with intensity $I = I_{\text{ref}}$ has an intensity level of 0 dB (threshold of hearing)
+    \item Each increase of 10 dB represents a \textbf{10-fold increase} in intensity
+    \item For example, 20 dB means the intensity is 100 times greater than $I_{\text{ref}}$, and 30 dB means it's 1000 times greater
+    \item Typical sounds range from about 0 dB (threshold of hearing) to 120 dB (threshold of pain)
+\end{itemize}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colback=yellow!5!white, colframe=yellow!75!black, title=\textbf{Exercises}]
+\textbf{Topics included:}
+\begin{itemize}
+    \item Sound intensity level calculation
+    \item Decibel difference between sounds
+    \item Intensity ratio from decibel difference
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Exercise 1:}
+
+A sound has an intensity of $10^{-10}$ W/m². What is its sound intensity level in decibels?
+
+\textbf{Solution:}
+
+We use the sound intensity level formula from Equation~\ref{eq:sound_intensity_level}:
+\begin{equation}
+\text{NI} = 10\log_{10}\left(\frac{I}{I_{\text{ref}}}\right)
+\end{equation}
+
+Given:
+\begin{itemize}
+    \item $I = 10^{-10}$ W/m²
+    \item $I_{\text{ref}} = 10^{-12}$ W/m² (from Equation~\ref{eq:reference_intensity})
+\end{itemize}
+
+Substituting the values:
+\begin{align*}
+\text{NI} &= 10\log_{10}\left(\frac{10^{-10}}{10^{-12}}\right) \\
+         &= 10\log_{10}\left(10^{-10 + 12}\right) \\
+         &= 10\log_{10}\left(10^{2}\right) \\
+         &= 10 \times 2 \\
+         &= 20 \text{ dB}
+\end{align*}
+
+Therefore, the sound intensity level is \textbf{20 dB}.
+
+\vspace{0.5cm}
+
+\textbf{Exercise 2:}
+
+Sound A has 400 times the intensity of sound B. How many decibels difference is there between them?
+
+\textbf{Solution:}
+
+Let $I_A$ be the intensity of sound A and $I_B$ be the intensity of sound B. We are given that $I_A = 400 \cdot I_B$.
+
+The intensity levels are:
+\begin{align*}
+\text{NI}_A &= 10\log_{10}\left(\frac{I_A}{I_{\text{ref}}}\right) \\
+\text{NI}_B &= 10\log_{10}\left(\frac{I_B}{I_{\text{ref}}}\right)
+\end{align*}
+
+The difference in decibels is:
+\begin{align*}
+\text{NI}_A - \text{NI}_B &= 10\log_{10}\left(\frac{I_A}{I_{\text{ref}}}\right) - 10\log_{10}\left(\frac{I_B}{I_{\text{ref}}}\right) \\
+                        &= 10\left[\log_{10}\left(\frac{I_A}{I_{\text{ref}}}\right) - \log_{10}\left(\frac{I_B}{I_{\text{ref}}}\right)\right] \\
+                        &= 10\log_{10}\left(\frac{I_A/I_{\text{ref}}}{I_B/I_{\text{ref}}}\right) \\
+                        &= 10\log_{10}\left(\frac{I_A}{I_B}\right) \\
+                        &= 10\log_{10}(400) \\
+                        &= 10\log_{10}(4 \times 100) \\
+                        &= 10[\log_{10}(4) + \log_{10}(100)] \\
+                        &= 10[\log_{10}(4) + 2] \\
+                        &\approx 10[0.602 + 2] \\
+                        &\approx 10 \times 2.602 \\
+                        &\approx 26.02 \text{ dB}
+\end{align*}
+
+Therefore, sound A is approximately \textbf{26 dB} louder than sound B.
+
+\vspace{0.5cm}
+
+\textbf{Exercise 3:}
+
+Sound A is 34 dB louder than sound B. How many times greater is the intensity of A compared to B?
+
+\textbf{Solution:}
+
+Let $I_A$ be the intensity of sound A and $I_B$ be the intensity of sound B. We are given that $\text{NI}_A - \text{NI}_B = 34$ dB.
+
+From the relationship between intensity levels and intensity ratios (as shown in Exercise 2), we know:
+\begin{equation}
+\text{NI}_A - \text{NI}_B = 10\log_{10}\left(\frac{I_A}{I_B}\right)
+\end{equation}
+
+Substituting the given decibel difference:
+\begin{align*}
+34 &= 10\log_{10}\left(\frac{I_A}{I_B}\right) \\
+3.4 &= \log_{10}\left(\frac{I_A}{I_B}\right) \\
+\frac{I_A}{I_B} &= 10^{3.4} \\
+\frac{I_A}{I_B} &= 10^{3 + 0.4} \\
+\frac{I_A}{I_B} &= 10^3 \times 10^{0.4} \\
+\frac{I_A}{I_B} &\approx 1000 \times 2.512 \\
+\frac{I_A}{I_B} &\approx 2512
+\end{align*}
+
+Therefore, sound A has approximately \textbf{2512 times} the intensity of sound B.
+
+\subsubsection{Structure of the Human Ear}
+
+The human ear is responsible for transmitting sounds to the brain and consists of three main parts: the \textbf{external ear} (\textit{oído externo}), \textbf{middle ear} (\textit{oído medio}), and \textbf{internal ear} (\textit{oído interno}). In addition to hearing, the ear also plays a role in maintaining balance.
+
+\paragraph{External Ear}
+
+The external ear collects sound waves from the environment and directs them inward. It consists of:
+\begin{itemize}
+    \item \textbf{Pinna (auricle)} (\textit{pabellón auditivo}): The visible outer part of the ear with a helical shape. It acts as an antenna, capturing sound waves and reducing impedance to allow sound to penetrate the ear canal. The pinna helps equalize pressure differences between the external environment and the inner ear.
+    \item \textbf{Ear canal} (\textit{conducto auditivo}): A 2-3 cm curved tube that conducts sound waves from the pinna to the eardrum. Its curved shape protects the eardrum from foreign objects. The ear canal amplifies low-frequency sounds, particularly those in the human voice range, acting like a natural hearing aid.
+    \item \textbf{Eardrum (tympanic membrane)} (\textit{tímpano}): A thin membrane at the end of the ear canal that separates the external and middle ear. Sound waves cause the eardrum to vibrate, transmitting these vibrations to the middle ear.
+\end{itemize}
+
+\paragraph{Middle Ear}
+
+The middle ear transmits sound signals from the external ear to the internal ear. Key components include:
+\begin{itemize}
+    \item \textbf{Ossicles} (\textit{huesecillos del oído medio}): Three connected bones (hammer (\textit{martillo}), anvil (\textit{yunque}), and stirrup (\textit{estribo})) that transmit vibrations from the eardrum to the inner ear. The stirrup connects to the oval window.
+    \item \textbf{Oval window} (\textit{ventana oval}): A thin membrane covering the end of the cochlea. It acts as an acoustic amplifier, increasing the pressure of sound signals approximately \textbf{20 times} compared to the eardrum. This amplification occurs because the eardrum has a larger surface area than the oval window, concentrating the force over a smaller area.
+    \item \textbf{Eustachian tube} (\textit{trompa de Eustaquio}): A passage connecting the middle ear to the back of the palate. It equalizes air pressure on both sides of the eardrum, opening when we swallow. Pressure imbalances (common during flights or altitude changes) can reduce hearing ability by preventing proper eardrum vibration.
+\end{itemize}
+
+\paragraph{Internal Ear}
+
+The internal ear transforms sound waves into electrical impulses that can be transmitted to the brain. Its main component is the \textbf{cochlea}:
+\begin{itemize}
+    \item \textbf{Cochlea} (\textit{cóclea}): A spiral-shaped structure (resembling a snail shell) filled with a fluid called perilymph (\textit{perilinfa}). It contains the \textbf{basilar membrane} (\textit{membrana basilar}), which separates the cochlea and has a small opening (helicotrema (\textit{helicotrema})) allowing fluid movement.
+    \item \textbf{Basilar membrane} (\textit{membrana basilar}): Acts as a \textbf{frequency filter bank}, enabling frequency discrimination. The membrane's mechanical properties vary along its length:
+    \begin{itemize}
+        \item At the \textbf{base} (near the oval window): thinner, less mass, less elasticity—responds to \textbf{high frequencies}
+        \item At the \textbf{apex} (far end): greater mass and elasticity—responds to \textbf{low frequencies}
+    \end{itemize}
+    Different frequencies cause maximum vibration at different locations along the membrane, allowing the ear to distinguish sounds by frequency.
+    \item \textbf{Hair cells} (\textit{células pilosas}): Approximately 24,000 microscopic fibers attached to the basilar membrane. When the perilymph fluid moves, these hair cells move and generate electrical impulses in the auditory nerve. Different hair cells respond to different frequencies based on their location along the basilar membrane.
+    \item \textbf{Auditory nerve} (\textit{nervio auditivo}): Transmits electrical signals from the cochlea to the brain, where sounds are interpreted and understood.
+\end{itemize}
+
+\subsubsection{Frequency Range and Thresholds}
+
+The human ear can detect sound waves in the frequency range from \textbf{20 Hz to 20 kHz}. Sounds below 20 Hz are called \textbf{infrasound}, while sounds above 20 kHz are called \textbf{ultrasound}.
+
+The ear is characterized by different operational thresholds:
+\begin{itemize}
+    \item \textbf{Threshold of audibility}: The minimum intensity level that the ear can detect. Maximum sensitivity occurs at approximately \textbf{4 kHz}.
+    \item \textbf{Threshold of sensation}: At \textbf{120 dB} (relative to the reference threshold), a tingling sensation occurs in the ear.
+    \item \textbf{Threshold of pain}: At \textbf{140 dB} and above, sound can cause pain.
+\end{itemize}
+
+\paragraph{Human Voice Characteristics}
+
+The human voice is physically characterized by a frequency range between \textbf{300 Hz and 3.4 kHz}. In telecommunications, a single voice channel is typically allocated a bandwidth of \textbf{4 kHz}. As will be seen later in the course, this bandwidth allows for a sampling frequency of \textbf{8 kHz} as the basis for digital modulation systems.
+
+\input{lectures/lecture_001/visual_system}

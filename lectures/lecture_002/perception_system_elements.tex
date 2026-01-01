@@ -1,0 +1,124 @@
+\section{Elements of a Perception System}
+
+\input{lectures/lecture_002/imitating_animal_world}
+
+\subsection{Information Capture}
+
+This section focuses on everything related to capturing information from the external environment. There are numerous parameters that define how information is captured.
+
+\subsubsection{Information Capture Parameters}
+
+The most essential parameters are the following:
+
+\begin{itemize}
+    \item \textbf{Specificity:} The capacity of an information capture system to faithfully record events. Sensors must be created specifically for their intended purpose.
+    
+    \textit{Example:} A video camera placed outdoors to capture traffic images has a certain temperature, but it cannot measure that temperature because it lacks the necessary sensitivity. A thermometer, specifically designed for temperature measurement, is needed.
+    
+    \item \textbf{Precision:} Indicates the measurement error of a given event. It reflects how much the measured value differs from reality.
+    
+    \textit{Example:} A thermometer that only indicates "cold" or "hot" has low precision. A thermometer capable of marking tenths of a degree is very precise.
+    
+    \item \textbf{Sensitivity:} Reflects the capacity of a sensor to capture fluctuations or changes in the event being measured. It evaluates how well the sensor adapts to changes in what is being measured.
+    
+    \textit{Example:} If light at a certain point varies up to thirty times per day, but the camera can only detect two of those changes, the camera lacks sufficient sensitivity.
+    
+    \item \textbf{Consumption and Size:} Most information capture devices require a power source to function. Depending on sensitivity, precision, and other factors (such as the amount of information captured), they will require greater or lesser electrical power consumption and will have different sizes. It is necessary to consider consumption and size in the design of computational perception systems, as it is generally true that consumption and size are \textbf{inversely proportional} to sensitivity and precision.
+    
+    \item \textbf{Other Factors:} Additional factors to consider include:
+    \begin{itemize}
+        \item \textbf{Price} of the sensor
+        \item \textbf{Usability}
+        \item \textbf{Resistance to external agents}: For example, whether a temperature sensor is resistant to rain or a camera is resistant to extreme temperatures
+        \item \textbf{Measurement range amplitude}: The range of values the sensor can measure
+        \item \textbf{Reparability}: How easily the sensor can be repaired
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Information Preprocessing}
+
+In this course, we understand \textbf{preprocessing} as the treatment performed immediately after information capture that will be common for any subsequent processing.
+
+Therefore, the criterion of this course is to define preprocessing as the set of tasks that adapt the captured information to its processing.
+
+Additionally, preprocessing can be performed either on analog information or after conversion to digital:
+\begin{itemize}
+    \item In the case of performing it on analog information, it usually involves hardware such as circuit-based filters, better sensors, etc.
+    \item In the case of performing preprocessing on already digitized (discretized) information, this will be primarily performed by software or code.
+\end{itemize}
+
+The most common preprocessing tasks usually cover the following aspects:
+\begin{itemize}
+    \item \textbf{Noise elimination}
+    \item \textbf{Anomaly detection}
+    \item \textbf{Error correction}
+\end{itemize}
+
+\subsection{Information Processing}
+
+At this point, the information is cleaned and ready for processing. The processing method depends on the intended purpose (detecting faces, reading license plates, detecting diseases in voice, etc.) and is the core of this course. These methods can be applied sequentially and are usually combined in real problems.
+
+\subsubsection{Filters and Smoothing}
+
+\textbf{Filters} are mathematical operations that eliminate or enhance details in signals or images. For example, a filter can remove image details (contrasts, edges) to help detect objects.
+
+Filtering is computationally expensive because it requires processing the entire signal or image. Most filters are nonlinear and involve information loss, making it difficult to recover the original information.
+
+\subsubsection{Segmentation and Region Detection}
+
+\textbf{Segmentation} divides information into sets of data with similar properties.
+
+\textbf{Example:} In an image of an elephant in the savanna, segmentation distinguishes zones like ground, elephant, sky, and vegetation. The number of segments depends on the application.
+
+Segmentation is one of the most computationally expensive operations. A current research challenge is automatically determining how many segments exist in an image. Good segmentation requires comparing features extracted from the image.
+
+\subsubsection{Feature Extraction}
+
+\textbf{Feature extraction} creates an analytical summary of each region, distinguishing different textures, intensities, or behavior patterns. It should be applied after preprocessing to avoid considering noise as part of the information.
+
+\textbf{Examples of features:}
+\begin{itemize}
+    \item Frequency components
+    \item Transform coefficients (Fourier, Laplace)
+    \item Contour smoothness
+    \item Area of segments
+    \item Texture descriptors
+\end{itemize}
+
+Feature extraction results in feature vectors that facilitate comparison between regions, objects, or signals. This is currently the most active area of research in information processing.
+
+\subsection{Decision Making}
+
+To recap, when reaching decision making, the following steps have been performed (illustrated with an example of automatic license plate reading):
+
+\begin{enumerate}
+    \item \textbf{Information sources defined:} A set of information sources relevant to solving the problem has been defined.
+    
+    \textit{Example:} Automatically reading car license plates.
+    
+    \item \textbf{Sensors selected:} Once information sources are established, sensors to capture the information are chosen.
+    
+    \textit{Example:} Standard cameras that capture photographs every second.
+    
+    \item \textbf{Preprocessing:} Correction of blur if it exists in the captured image.
+    
+    \textit{Example:} Blur is common due to the speed at which the image is captured.
+    
+    \item \textbf{Processing:} Filtering to eliminate less important details, color segmentation, and edge detection, followed by feature extraction.
+    
+    \textit{Example:} Detecting where each number and letter of the license plate is located.
+\end{enumerate}
+
+At this point, in the case of Spain, we have four numbers and three letters. However, the methods presented so far do not help with:
+\begin{itemize}
+    \item Ensuring there are indeed four numbers and three letters
+    \item Ensuring we are reading a license plate and not the car brand
+    \item Associating a specific set of pixels to a number
+    \item Detecting that it is not a Spanish license plate
+\end{itemize}
+
+All these tasks must be performed in the \textbf{decision-making module}. This module is responsible for applying the final logic to either make a decision (e.g., "Is this a registered license plate?") or support decision making (e.g., marking in an image which zones correspond to landscapes).
+
+This phase should be performed mainly after feature extraction. Considering it based solely on filtering, segmentation, or even preprocessing is usually not common and, in many cases, complicates decision making enormously.
+
+However, there are cases where decision-making modules might not exist. For example, autonomous cars capable of driving automatically have a module that detects road lines. This module has all the ingredients of a computational perception system: information capture, preprocessing, and feature extraction. However, this module does not make any decision; instead, it provides the feature extraction to another module that aggregates information from other sources and makes the decision. Therefore, it can be said that this computational perception module does not make a decision, but rather helps other modules both to learn and to support decision making.

@@ -1,0 +1,194 @@
+\subsection{Visual System}
+
+\textbf{Vision} is the phenomenon resulting from the perception of color, shape, and distance of objects in space. Vision occurs as a result of light—characterized as an electromagnetic wave—incident on the retina of the eye.
+
+For vision to occur, the light wave must be within a specific frequency range called the \textbf{visible light spectrum}. The perceived color depends on the frequency (wavelength) of the light incident on the observed object. Additionally, the state of the eye itself influences color perception, as occurs in cases such as color blindness (\textit{daltonismo}).
+
+The \textbf{retina} (\textit{retina}) is an inner membrane containing photosensitive cells. These cells are of two types: \textbf{cones} (\textit{conos}) and \textbf{rods} (\textit{bastones}).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{0.4\textwidth}|p{0.55\textwidth}|}
+\hline
+\textbf{Cones} (\textit{Conos}) & Less numerous and very insensitive to light. They are the cells responsible for \textbf{daytime vision}. \\
+\hline
+\textbf{Rods} (\textit{Bastones}) & Require less light than cones for their excitation. Therefore, they are the sensory cells responsible for \textbf{night vision}. \\
+\hline
+\end{tabular}
+\caption{Comparison between cones and rods photoreceptor cells}
+\label{tab:photoreceptors}
+\end{table}
+
+\paragraph{Spatial Distribution}
+
+Figure~\ref{fig:photoreceptor_distribution} shows the spatial distribution of photoreceptor cells across the retina, taking the central point of the retina or \textbf{fovea} (\textit{fóvea}) as reference. Rods are found mainly away from the fovea, while cones are concentrated around it. Additionally, there is a \textbf{blind spot} (\textit{punto ciego}) in the retina, lacking photosensitive cells, which is where the optic nerves depart toward the brain.
+
+The fovea receives light from the center of the visual field, i.e., from the point in space we look at directly. Cones, mainly concentrated in this zone, capture light from the focused point and are responsible for \textbf{direct or central vision}. In contrast, rods, located farther from the fovea, provide \textbf{peripheral vision}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/conesrodes.png}
+    \caption{Spatial distribution of cones and rods across the retina as a function of eccentricity from the fovea (0 degrees). The red curve shows cone density, and the black curve shows rod density. The blind spot (optic nerve) is indicated by the vertical dotted line.}
+    \label{fig:photoreceptor_distribution}
+\end{figure}
+
+\paragraph{Cones}
+
+Cones act as filters on the incident light. Humans have three types of cones:
+\begin{itemize}
+    \item \textbf{L cones} (long): Respond more to long-wavelength light, reaching a maximum at approximately 560 nm (corresponds to red).
+    \item \textbf{M cones} (medium): Filter medium-wavelength light, reaching a maximum at 530 nm (corresponds to green).
+    \item \textbf{S cones} (short): Respond more to short-wavelength light, reaching a maximum at 420 nm (corresponds to blue).
+\end{itemize}
+
+Different colors are perceived based on the differential excitation of these three types of receptor cells. For example, yellow is perceived when L cones are stimulated slightly more than M cones, and red when L cones are stimulated significantly more than M cones. Similarly, blue and violet tones are perceived when the S receptor is stimulated more. Through the weighted mixture of red, blue, and green, we are able to construct the chromatic range perceptible by humans.
+
+\paragraph{Rods}
+
+Rods are not sensitive to color (frequency), as there is only one type of rod. These cells do not allow color formation. This is why in darkness we are unable to distinguish any color.
+
+\subsubsection{Visual Phenomena}
+
+\begin{itemize}
+    \item \textbf{Logarithmic Response:} The concept of \textbf{Just Noticeable Difference (JND)} represents, in the field of psychophysiology, the minimum amount of variation $\Delta I$ in the magnitude of a stimulus $I$ for it to be perceived. In the 19th century, psychologist Ernst Weber determined a constant relationship between $\Delta I$ and $I$ over a wide range of $I$. This means that the minimum variation needed to perceive a change in a stimulus increases as the stimulus becomes more intense. Mathematically, \textbf{Weber's Law} (\textit{Ley de Weber}) is established as:
+    \begin{equation}
+    \frac{\Delta I}{I} = \lambda
+    \label{eq:weber_law}
+    \end{equation}
+    where $\lambda$ is a constant. Applied to visual perception, where $I$ represents the amount of light or perceived intensity, as the perceived intensity increases, a more significant variation $\Delta I$ is required for it to be noticeable. Therefore, the JND is different in bright or dark areas of an image.
+    
+    \textbf{Example:} Consider Weber's Law with a constant $\lambda = 0.02$ (a typical value for brightness perception). At low intensity ($I = 10$ units): $\Delta I = 0.2$ units. At high intensity ($I = 100$ units): $\Delta I = 2$ units. Even though the absolute change required increases, the \textbf{ratio} $\Delta I/I = 0.02$ remains constant.
+    
+    \item \textbf{Lateral Inhibition:} In addition to this logarithmic transformation, the human visual system performs spatial filtering of the received light signal, which results in contrast enhancement between areas of different intensity. Areas of the image where light intensity changes abruptly from light to dark, or vice versa, denote the presence of edges.
+    
+    The connection of cones and rods with retinal cells allows capturing and enhancing these changes. Both cones and rods are connected with two types of cells (in the second and third layers of the retina, respectively). These cells perform visual signal processing equivalent to that produced by the \textbf{Laplacian operator} (a second-order differential that magnifies areas of the signal where abrupt changes are observed).
+    
+    
+    This phenomenon constitutes \textbf{lateral inhibition}, which, with behavior similar to a high-frequency filter, helps us perceive contrast, facilitating the subsequent identification of limits or boundaries between regions of different intensity, as well as contours or edges. This phenomenon was described by Mach, as reflected in the experiment using bands of different intensity (see Figure~\ref{fig:mach_bands}).
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{img/machband.png}
+        \caption{Mach bands demonstration. Top panel shows ideal stepped intensity gradient and its corresponding intensity plot. Bottom panel shows the perceived intensity with Mach bands (contrast enhancement at edges) and its corresponding intensity plot with overshoots and undershoots, illustrating lateral inhibition effects.}
+        \label{fig:mach_bands}
+    \end{figure}
+    
+    \item \textbf{Temporal Sampling or Filtering:} The human eye also performs temporal filtering of the captured signal. Its temporal response is relatively slow. Consider an intermittent light source: if the time between consecutive light emissions is greater than 30 ms, the periods without light emission are perceived. However, for higher frequencies, the periods without light emission are not perceived, giving the appearance of continuous light.
+    
+    The frequency at which the intermittency of the light source is not perceived is called the \textbf{fusion frequency}. It is around \textbf{30 Hz}, depending on the size and brightness of the source. A practical application of this phenomenon is the definition of video encoding standards, which define the necessary frame rate (sampling frequency) so that the viewer does not perceive discontinuities. For example, PAL and NTSC systems defined rates of 25 and 30 frames per second, respectively.
+    
+    Human vision is characterized by a \textbf{motion rendering frequency}, which allows creating a continuous sensation of movement from a set of snapshots. However, the frequency at which these snapshots are presented must be sufficiently high so that perception does not reflect discontinuities.
+\end{itemize}
+
+Based on the mechanisms described, the image capture process by the human visual system can be schematized in the following steps:
+
+\begin{enumerate}
+    \item \textbf{Frequency filtering} to select the part of luminous radiation corresponding to the visible light spectrum. For example, we only perceive wavelengths between approximately 400-700 nm, filtering out ultraviolet and infrared radiation.
+    \item \textbf{Logarithmic transformation} (Weber's Law) of the perceived stimulus. For example, when adjusting the brightness of a screen in a dark room, a small increase (e.g., from 10\% to 12\%) is easily noticeable. However, in a bright room, you need a much larger increase (e.g., from 80\% to 90\%) to perceive the same difference. This demonstrates that the minimum change needed to notice a difference increases proportionally with the initial intensity, maintaining a constant ratio $\Delta I/I$.
+    \item \textbf{Spatial filtering} (edge and boundary enhancement) according to the lateral inhibition mechanism. For example, Mach bands demonstrate how edges between different intensity regions are enhanced, making boundaries more perceptible (see Figure~\ref{fig:mach_bands}).
+    \item \textbf{Temporal filtering} (signal sampling) reflected in the critical fusion frequency and motion rendering frequency. For example, video systems use frame rates of 25-30 fps (PAL/NTSC) to avoid perceiving flicker, based on the fusion frequency of approximately 30 Hz.
+\end{enumerate}
+
+\subsubsection{Color Synthesis}
+
+The color of an object is defined by the \textbf{spectral content} of a specific radiation, represented as $R(f)$. Variations in color of a luminous signal are associated with the different frequencies of the signals.
+
+\textbf{Metamerism} is the phenomenon where two distinct radiations, $R_1(f)$ and $R_2(f)$, with different spectra ($R_1(f) \neq R_2(f)$), result in the \textbf{same color perception}. This occurs because perceived color is a function of three non-independent channels corresponding to the three types of cones.
+
+Each cone acts as a \textbf{frequency filter} $S_i(f)$ that selects a portion of the colors from the incoming radiation. Mathematically, the response of the $i$-th color receptor to a light spectrum $R(f)$ can be expressed as:
+
+\begin{equation}
+\alpha_i(R) = \int_{f_{\text{min}}}^{f_{\text{max}}} R(f) S_i(f) \, df
+\label{eq:cone_response}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\alpha_i(R)$ represents the \textbf{output signal} (or response strength) of the $i$-th cone type when exposed to light spectrum $R(f)$. The index $i = 1, 2, 3$ corresponds to the three types of cones (L, M, and S cones).
+    \item $R(f)$ is the spectral power distribution of the incident light (how much light is present at each frequency).
+    \item $S_i(f)$ is the spectral sensitivity function of the $i$-th color receptor (how sensitive that cone type is to each frequency).
+    \item The integral is taken over the visible frequency range ($f_{\text{min}}$ to $f_{\text{max}}$), effectively summing up the contribution of all frequencies weighted by the cone's sensitivity.
+\end{itemize}
+
+Therefore, two colors $R_1(f)$ and $R_2(f)$ will be perceived in the same way if:
+\begin{equation}
+\alpha_i[R_1(f)] = \alpha_i[R_2(f)] \quad \text{for } i = 1, 2, 3
+\label{eq:metamerism}
+\end{equation}
+
+A given color $R(f)$ can be synthesized from the superposition of three primaries $P_k(f)$ by finding the appropriate coefficients $\beta_k$ in the mixture, as shown in Figure~\ref{fig:color_synthesis}. The synthesized color is given by:
+
+\begin{equation}
+R(f) = \sum_{k=1}^{3} \beta_k P_k(f)
+\label{eq:color_synthesis}
+\end{equation}
+
+For the result of the synthesis to produce the expected color sensation, the following must be met:
+
+\begin{align}
+\alpha_i(R) &= \int_{f_{\text{min}}}^{f_{\text{max}}} R(f) S_i(f) \, df \nonumber \\
+            &= \int_{f_{\text{min}}}^{f_{\text{max}}} \left[\sum_{k=1}^{3} \beta_k P_k(f)\right] S_i(f) \, df \nonumber \\
+            &= \sum_{k=1}^{3} \beta_k \int_{f_{\text{min}}}^{f_{\text{max}}} P_k(f) S_i(f) \, df \nonumber \\
+            &= \sum_{k=1}^{3} \alpha_{ik} \beta_k
+\label{eq:synthesis_condition}
+\end{align}
+
+where $\alpha_{ik}$ is the response of type $i$ cones to the primary color $P_k(f)$, given by:
+
+\begin{equation}
+\alpha_{ik} = \int_{f_{\text{min}}}^{f_{\text{max}}} P_k(f) S_i(f) \, df
+\label{eq:primary_response}
+\end{equation}
+
+Therefore, the previous equality demonstrates that the mixing coefficients $\beta_k$ are given by the solution to a system of three equations and three unknowns, given the response of the three cone filters to the three primary colors initially considered $P_k(f)$.
+
+For example, one of the most relevant \textbf{color systems} is \textbf{RGB} (red, green, blue), commonly used in screens, which takes red, green, and blue as primary colors for mixing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/color_synthesis.png}
+    \caption{Color synthesis process. Three primary colors $P_k$ are weighted by coefficients $\beta_k$ and summed to produce the synthesized color $\sum \beta_k P_k(f)$.}
+    \label{fig:color_synthesis}
+\end{figure}
+
+\begin{tcolorbox}[colback=yellow!5!white, colframe=yellow!75!black, title=\textbf{Exercises}]
+\textbf{Topics included:}
+\begin{itemize}
+    \item Metamerism and color perception
+    \item Cone responses to light spectra
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Exercise 1:}
+
+Two light spectra $R_1(f)$ and $R_2(f)$ produce the following cone responses:
+
+\textbf{For $R_1(f)$:}
+\begin{itemize}
+    \item $\alpha_1[R_1(f)] = 0.8$ (L cone response)
+    \item $\alpha_2[R_1(f)] = 0.6$ (M cone response)
+    \item $\alpha_3[R_1(f)] = 0.4$ (S cone response)
+\end{itemize}
+
+\textbf{For $R_2(f)$:}
+\begin{itemize}
+    \item $\alpha_1[R_2(f)] = 0.8$ (L cone response)
+    \item $\alpha_2[R_2(f)] = 0.6$ (M cone response)
+    \item $\alpha_3[R_2(f)] = 0.3$ (S cone response)
+\end{itemize}
+
+Will these two colors be perceived as the same? Justify your answer using the metamerism condition.
+
+\textbf{Solution:}
+
+According to the metamerism condition (Equation~\ref{eq:metamerism}), two colors $R_1(f)$ and $R_2(f)$ will be perceived as the same if:
+$$\alpha_i[R_1(f)] = \alpha_i[R_2(f)] \quad \text{for } i = 1, 2, 3$$
+
+Let's check each cone response:
+\begin{itemize}
+    \item L cone ($i=1$): $\alpha_1[R_1(f)] = 0.8 = \alpha_1[R_2(f)]$ \checkmark
+    \item M cone ($i=2$): $\alpha_2[R_1(f)] = 0.6 = \alpha_2[R_2(f)]$ \checkmark
+    \item S cone ($i=3$): $\alpha_3[R_1(f)] = 0.4 \neq \alpha_3[R_2(f)] = 0.3$ \texttimes
+\end{itemize}
+
+Since $\alpha_3[R_1(f)] \neq \alpha_3[R_2(f)]$, the metamerism condition is \textbf{not satisfied} for all three cone types. Therefore, these two colors will \textbf{not} be perceived as the same. The difference in S cone response (0.4 vs 0.3) means the colors will appear different to the human eye.
