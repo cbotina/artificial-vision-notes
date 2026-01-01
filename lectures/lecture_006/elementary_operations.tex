@@ -1,0 +1,130 @@
+\section{Image Processing: Elementary Operations}
+
+There are different operations for image enhancement. In this topic, the focus is on elementary point-to-point operations. These operations are characterized by the fact that the value of a pixel in the processed image is a function solely of the value of that same pixel in the original image. Mathematically, this is expressed as follows:
+
+\begin{equation}
+B(x,y) = T(A(x,y))
+\label{eq:point_to_point}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $A(x,y)$ represents the original image, where $A$ is a function that takes spatial coordinates $(x,y)$ as input and returns the pixel intensity value at that location
+    \item $B(x,y)$ represents the processed image, where $B$ is the resulting function after applying the transformation
+    \item $T$ is the transformation function that maps each pixel value from the original image to a new value in the processed image
+    \item The key characteristic is that $B(x,y)$ depends \textbf{only} on $A(x,y)$ at the same coordinates $(x,y)$, not on neighboring pixels
+\end{itemize}
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=\textbf{Note: Point-to-Point Operations}]
+Point-to-point operations are also known as \textbf{pixel-wise operations} or \textbf{point operations}. They are computationally efficient because each pixel can be processed independently, without requiring information from neighboring pixels. This makes them suitable for parallel processing and real-time applications.
+\end{tcolorbox}
+
+To synthesize the information provided in this topic, the following scheme reflects the main concepts:
+
+\begin{itemize}
+    \item \textbf{Intensity Adjustment}
+    \item \textbf{Histogram Processing}
+    \item \textbf{Arithmetic Operators}
+\end{itemize}
+
+\subsection{Intensity Adjustment}
+
+Intensity adjustment operations consist of different expressions of the operator $T$ from Equation~\ref{eq:point_to_point}. 
+
+In the context of digital images, $L$ represents the total number of possible intensity levels that a pixel can take. For example:
+\begin{itemize}
+    \item In an 8-bit grayscale image, $L = 256$ (pixels can take values from 0 to 255)
+    \item In a 16-bit grayscale image, $L = 65536$ (pixels can take values from 0 to 65535)
+    \item The actual pixel values range from 0 to $L-1$, where 0 represents the darkest level (black) and $L-1$ represents the brightest level (white)
+\end{itemize}
+
+Figure~\ref{fig:intensity_adjust} shows some of the most common transformation operations for an image with $L$ different intensity levels. The graph plots output gray levels ($s$) against input gray levels ($r$), ranging from 0 to $L-1$, and displays various transformation curves including Identity, Negative, Logarithmic, Inverse Logarithmic, $n$-th root, and $n$-th power transformations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/intensity-adjust.png}
+    \caption{Common gray-level transformation functions for point-to-point intensity adjustment operations. The graph shows how different functions map input pixel intensities ($r$) to output pixel intensities ($s$).}
+    \label{fig:intensity_adjust}
+\end{figure}
+
+\subsubsection{Image Negative}
+
+\textbf{Image negative} (\textit{negativo de una imagen}) represents the inverted image with respect to the original. The mathematical expression of the transformation is given by the following equation:
+
+\begin{equation}
+T(u) = L - u
+\label{eq:image_negative}
+\end{equation}
+
+where $L$ is the maximum intensity level that a pixel can take (e.g., $L = 256$ for 8-bit images, where the maximum value is $L-1 = 255$).
+
+This transformation inverts the gray levels, mapping dark pixels to bright and bright pixels to dark. In the transformation graph, the negative operation appears as a straight diagonal line extending from the top-left corner $(0, L-1)$ to the bottom-right corner $(L-1, 0)$.
+
+\textbf{Example:} In an 8-bit image where $L = 256$, a pixel with intensity $u = 10$ (very dark) becomes $T(10) = 256 - 10 = 246$ (very bright), while a pixel with intensity $u = 246$ becomes $T(246) = 256 - 246 = 10$.
+
+\subsubsection{Logarithmic Transformations}
+
+\textbf{Logarithmic transformations} (\textit{transformaciones logarítmicas}) use a logarithmic function to map pixel intensities. The mathematical expression for logarithmic operators is:
+
+\begin{equation}
+T(u) = C \log(1 + u)
+\label{eq:logarithmic}
+\end{equation}
+
+where $C$ is a constant.
+
+The profile of this operator can be observed in Figure~\ref{fig:intensity_adjust}. As can be seen, this transformation maps a small range of lower intensity values in the input image to a wide range of output values. However, the opposite occurs for higher intensity values, which tend to be concentrated in a narrow range of output values.
+
+Therefore, this transformation is used when we want to expand the range of intensity of dark pixels while simultaneously compressing the brighter pixels together.
+
+The practical utility of this operator can be appreciated in situations where the input image possesses a very wide dynamic range, and its representation would therefore only allow us to distinguish black and white pixels. By applying a logarithmic transformation, the dark regions are expanded, making details in low-intensity areas more visible, while the bright regions are compressed, preventing saturation.
+
+\textbf{Example:} In medical imaging or astronomical images, where the intensity range can span several orders of magnitude, logarithmic transformations help visualize details in both dark and bright regions that would otherwise be lost in a linear representation.
+
+\subsubsection{Power Law Transformations}
+
+\textbf{Power law transformations} (\textit{ley de potencia}), also known as gamma correction, use a power function to map pixel intensities. The transformation function according to the power law is given by the following expression:
+
+\begin{equation}
+T(u) = C u^{\gamma}
+\label{eq:power_law}
+\end{equation}
+
+where $C$ and $\gamma$ are positive constants.
+
+The profile of the functions obtained according to this expression is shown in Figure~\ref{fig:power_law}. As in the case of logarithmic transformations, values of $\gamma$ less than unity tend to expand the range of intensity of darker pixels, while compressing it for brighter pixels.
+
+The advantage of these functions with respect to the logarithmic transformation is the possibility of generating a wide family of transformations simply by varying the parameter $\gamma$. By adjusting $\gamma$, we can achieve different effects:
+\begin{itemize}
+    \item $\gamma < 1$: Expands dark regions and compresses bright regions (similar to logarithmic transformation)
+    \item $\gamma = 1$: Linear transformation (no change, identity function)
+    \item $\gamma > 1$: Compresses dark regions and expands bright regions (opposite effect to logarithmic)
+\end{itemize}
+
+This flexibility makes power law transformations particularly useful for display calibration, contrast enhancement, and adapting images to different viewing conditions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/power.png}
+    \caption{Power law transformation curves for different values of $\gamma$. Curves with $\gamma < 1$ expand dark pixel intensities, while curves with $\gamma > 1$ expand bright pixel intensities. The diagonal line represents $\gamma = 1$ (identity transformation).}
+    \label{fig:power_law}
+\end{figure}
+
+\subsubsection{Piecewise Functions}
+
+The previous functions have a single mathematical expression for the entire domain of application, that is, for any input intensity value. However, it can be interesting to apply different transformations depending on the intensity range of the pixels being operated on. In this situation, \textbf{piecewise operators} (\textit{operadores definidos a trozos o tramos}) are employed.
+
+The main advantage of these functions is that their form or expression can be arbitrarily complex. For example, the input intensity range can be divided into as many segments as desired, defining a specific transformation for each of them.
+
+However, the most relevant disadvantage is that they require a high degree of user involvement for their definition. Generally, a human defines the function through visual inspection of the effect produced by each of the transformations applied to the different segments.
+
+One of the most common applications of this type of function is \textbf{contrast enhancement} in an image. In some situations, the image may have a small dynamic range due to poor scene illumination, the sensor employed, or the lens configuration used in capture. 
+
+Figure~\ref{fig:piecewise} illustrates a piecewise linear transformation function $T(r)$ that selectively enhances contrast in the mid-range of gray levels. The function consists of three segments: a shallow slope for dark regions, a steep slope for intermediate intensities (enhancing contrast), and a moderate slope for bright regions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/parts.png}
+    \caption{Example of a piecewise linear transformation function $T(r)$ for contrast enhancement. The function selectively expands contrast in the intermediate intensity range (between $r_1$ and $r_2$) while compressing or maintaining contrast in dark and bright regions.}
+    \label{fig:piecewise}
+\end{figure}

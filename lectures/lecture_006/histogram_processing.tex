@@ -1,0 +1,16 @@
+\subsection{Histogram Processing}
+
+As indicated previously, piecewise transformation functions for contrast enhancement require manual definition through trial and error, which can be tedious. An alternative is histogram-based processing, which automatically determines the transformation.
+
+The histogram of an image provides an estimation of the \textbf{probability density function} (\textbf{PDF}) of pixel intensity values. For an image with $L$ intensity levels, the histogram counts how many pixels have each intensity level. The normalized histogram divides these counts by the total number of pixels, giving the probability of each intensity level.
+
+\textbf{Histogram equalization} (\textit{igualación del histograma}) automatically enhances image contrast without user intervention. It redistributes pixel intensities to create a more uniform histogram.
+
+Figure~\ref{fig:histogram_equalization} shows an example of histogram equalization. The transformed histogram becomes more uniform, spreading intensity values across the full range. In contrast, the original histogram concentrates values in a narrow range, resulting in lower contrast.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{img/eqist.png}
+    \caption{Example of histogram equalization applied to a grayscale image. The top row shows the original image (left) and the equalized image (right). The bottom row shows their corresponding histograms. The equalized histogram exhibits a more uniform distribution with greater dispersion across the full intensity range, resulting in enhanced contrast and improved visibility of details.}
+    \label{fig:histogram_equalization}
+\end{figure}

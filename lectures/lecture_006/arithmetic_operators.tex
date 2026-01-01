@@ -1,0 +1,435 @@
+\subsection{Arithmetic Operators}
+
+Of the four possible arithmetic operations (addition, subtraction, multiplication, and division), subtraction and addition are the two most useful operators in preprocessing stages for achieving image enhancement.
+
+\subsubsection{Image Enhancement Using the Subtraction Operator}
+
+\textbf{Image enhancement using the subtraction operator} (\textit{realce de imagen mediante el operador resta}) allows highlighting differences between two images. The difference $C(x,y)$ between two images $A(x,y)$ and $B(x,y)$ is obtained by subtracting each pair of pixels in both:
+
+\begin{equation}
+C(x,y) = B(x,y) - A(x,y)
+\label{eq:image_subtraction}
+\end{equation}
+
+This operation enables the detection of differences between images that may appear visually similar. Figure~\ref{fig:arithmetic_subtraction} shows an example where subtraction reveals subtle differences:
+
+\begin{itemize}
+    \item \textbf{Top-left:} The original image, where each pixel is encoded using 8 bits, allowing for 256 different intensity levels.
+    \item \textbf{Top-right:} An image obtained by setting the fourth bit of each pixel to 0. Visually, there appears to be no difference between this image and the original.
+    \item \textbf{Bottom-left:} The result of subtracting the two images (pixel by pixel). This image reveals certain differences between the original and the modified image, despite their apparent similarity.
+    \item \textbf{Bottom-right:} The differences from the bottom-left image are further enhanced using histogram equalization, making them more visible.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{img/arithmetic1.png}
+    \caption{Example of image enhancement using subtraction. The top row shows the original image (left) and a modified version with the fourth bit set to 0 (right). The bottom row shows the subtraction result (left) and its histogram-equalized version (right), revealing subtle differences that are not visible in the original comparison.}
+    \label{fig:arithmetic_subtraction}
+\end{figure}
+
+\subsubsection{Image Smoothing Using the Addition Operator}
+
+\textbf{Image smoothing using the addition operator} (\textit{suavizado de imagen mediante el operador suma}) works similarly to subtraction. The addition operator applied to two or more images consists of adding the intensity values of corresponding pixels in each of them. The interest of this operator lies in its use for obtaining the average image from a set, which allows reducing capture noise.
+
+For a set of $M$ images $A_i(x,y)$ ($i = 1, \ldots, M$), their average is obtained as follows:
+
+\begin{equation}
+C(x,y) = \frac{1}{M} \sum_{i=1}^{M} A_i(x,y)
+\label{eq:image_averaging}
+\end{equation}
+
+Each snapshot $A_i(x,y)$ can be seen as the realization of a \textbf{spatial stochastic process}, a random variable whose observations are images. Therefore, these snapshots are expressed mathematically as:
+
+\begin{equation}
+A_i(x,y) = F(x,y) + \eta(x,y)
+\label{eq:image_model}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $F(x,y)$ represents the ideal noise-free image
+    \item $\eta(x,y)$ is a stochastic process assumed to be stationary and Gaussian, with zero mean and variance $\sigma^2$
+\end{itemize}
+
+If the additive noise $\eta(x,y)$ is assumed uncorrelated between any two snapshots of our set, it can be demonstrated that the average of all of them tends to the image $F(x,y)$:
+
+\begin{equation}
+\lim_{M \to \infty} C(x,y) = F(x,y)
+\label{eq:averaging_limit}
+\end{equation}
+
+The power of the capture noise is attenuated according to a factor $M$ in the resulting average image:
+
+\begin{equation}
+\sigma^2_C = \frac{\sigma^2}{M}
+\label{eq:noise_reduction}
+\end{equation}
+
+where $\sigma^2_C$ is the variance of the noise in the averaged image and $\sigma^2$ is the variance of the noise in a single image.
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=\textbf{Note: Image Alignment Requirement}]
+This enhancement strategy based on the attenuation of capture noise assumes that the initial snapshots are perfectly aligned. Otherwise, the final result would show a clear blurring of the edges of the structures in the image.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!5!white, colframe=yellow!75!black, title=\textbf{Exercises}]
+\textbf{Topics:}
+\begin{itemize}
+    \item Linear intensity transformations
+    \item Power-law transformations
+    \item Piecewise linear transformations
+    \item Parameter calculation for contrast enhancement
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Exercise 1:} Consider an 8-bit image with minimum intensity value $r_{\text{min}} = 35$ and maximum intensity value $r_{\text{max}} = 190$. We want to apply a global linear intensity transformation defined by the equation $s = ar + b$ to obtain a transformed image with minimum intensity value $s_{\text{min}} = 10$ and maximum intensity value $s_{\text{max}} = 240$.
+
+Find the parameters $a$ and $b$ of the linear transformation that maps the original minimum and maximum intensity values exactly to the desired minimum and maximum values.
+
+\textbf{Solution:}
+
+We need to find $a$ and $b$ such that:
+\begin{align}
+s_{\text{min}} &= ar_{\text{min}} + b \label{eq:ex1_min} \\
+s_{\text{max}} &= ar_{\text{max}} + b \label{eq:ex1_max}
+\end{align}
+
+Substituting the given values:
+\begin{align}
+10 &= 35a + b \label{eq:ex1_eq1} \\
+240 &= 190a + b \label{eq:ex1_eq2}
+\end{align}
+
+To solve for $a$, we subtract equation~\eqref{eq:ex1_eq1} from equation~\eqref{eq:ex1_eq2}:
+\begin{align}
+240 - 10 &= 190a + b - (35a + b) \\
+230 &= 155a \\
+a &= \frac{230}{155} = \frac{46}{31} \approx 1.484
+\end{align}
+
+Now, substituting $a$ into equation~\eqref{eq:ex1_eq1} to find $b$:
+\begin{align}
+10 &= 35 \cdot \frac{230}{155} + b \\
+10 &= \frac{8050}{155} + b \\
+10 &= \frac{1610}{31} + b \\
+b &= 10 - \frac{1610}{31} = \frac{310 - 1610}{31} = -\frac{1300}{31} \approx -41.935
+\end{align}
+
+\textbf{Verification:}
+\begin{itemize}
+    \item For $r = 35$: $s = \frac{46}{31} \times 35 - \frac{1300}{31} = \frac{1610 - 1300}{31} = \frac{310}{31} = $ \colorbox{yellow!30}{10}
+    \item For $r = 190$: $s = \frac{46}{31} \times 190 - \frac{1300}{31} = \frac{8740 - 1300}{31} = \frac{7440}{31} = $ \colorbox{yellow!30}{240}
+\end{itemize}
+
+Therefore, the linear transformation is:
+\begin{equation}
+s = \frac{46}{31}r - \frac{1300}{31} \approx 1.484r - 41.935
+\end{equation}
+
+\textbf{Exercise 2:} Consider an 8-bit grayscale image with intensities $r \in [0, 255]$. A power transformation of the form
+\begin{equation}
+s = cr^{\gamma}
+\end{equation}
+is applied, where $c$ and $\gamma$ are positive real constants. It is known that a pixel with original intensity $r = 64$ transforms exactly to $s = 16$.
+
+\begin{enumerate}
+    \item Write the equation that relates $c$ and $\gamma$ from the condition $s(64) = 16$.
+    \item Suppose that it is desired that the transformation does not modify the maximum intensity value, i.e., that $s(255) = 255$. Use this additional condition to obtain a system of equations and solve for $c$ and $\gamma$, finding a pair of unique numerical values.
+\end{enumerate}
+
+\textbf{Solution:}
+
+\textbf{Part 1:} From the condition $s(64) = 16$, we substitute into the transformation equation:
+\begin{equation}
+16 = c \cdot 64^{\gamma}
+\label{eq:ex2_eq1}
+\end{equation}
+This equation relates $c$ and $\gamma$ but does not uniquely determine either parameter.
+
+\textbf{Part 2:} With the additional condition $s(255) = 255$, we obtain a second equation:
+\begin{equation}
+255 = c \cdot 255^{\gamma}
+\label{eq:ex2_eq2}
+\end{equation}
+
+We now have a system of two equations with two unknowns. To solve for $\gamma$, we can eliminate $c$ by dividing equation~\eqref{eq:ex2_eq2} by equation~\eqref{eq:ex2_eq1}:
+\begin{align}
+\frac{255}{16} &= \frac{c \cdot 255^{\gamma}}{c \cdot 64^{\gamma}} \\
+\frac{255}{16} &= \left(\frac{255}{64}\right)^{\gamma} \\
+\frac{255}{16} &= \left(\frac{255}{64}\right)^{\gamma}
+\end{align}
+
+Taking the natural logarithm of both sides:
+\begin{align}
+\ln\left(\frac{255}{16}\right) &= \gamma \ln\left(\frac{255}{64}\right) \\
+\gamma &= \frac{\ln\left(\frac{255}{16}\right)}{\ln\left(\frac{255}{64}\right)} \\
+\gamma &= \frac{\ln(15.9375)}{\ln(3.984375)} \\
+\gamma &\approx \frac{2.768}{1.382} \approx 2.002
+\end{align}
+
+Now, substituting $\gamma \approx 2.002$ into equation~\eqref{eq:ex2_eq1} to find $c$:
+\begin{align}
+c &= \frac{16}{64^{\gamma}} \\
+c &= \frac{16}{64^{2.002}} \\
+c &\approx \frac{16}{4096.5} \approx 0.0039
+\end{align}
+
+\textbf{Verification:}
+\begin{itemize}
+    \item For $r = 64$: $s = 0.0039 \times 64^{2.002} \approx 0.0039 \times 4096.5 \approx $ \colorbox{yellow!30}{16}
+    \item For $r = 255$: $s = 0.0039 \times 255^{2.002} \approx 0.0039 \times 65025 \approx $ \colorbox{yellow!30}{254.6} $\approx 255$
+\end{itemize}
+
+Therefore, the power-law transformation is approximately:
+\begin{equation}
+s \approx 0.0039 \cdot r^{2.002}
+\end{equation}
+
+\textbf{Exercise 3:} Consider an 8-bit image with intensity levels $r \in [0, 255]$, and a piecewise linear intensity transformation $s = T(r)$ that passes through the points: $(0, 0)$, $(r_1, s_1)$, $(r_2, s_2)$, $(255, 255)$, where $0 < r_1 < r_2 < 255$ and $0 < s_1 < s_2 < 255$.
+
+The values are fixed:
+\begin{align}
+r_1 &= 64, \quad r_2 = 160 \\
+s_1 &= 48, \quad s_2 = 224
+\end{align}
+
+\begin{enumerate}
+    \item Write the function $T(r)$ explicitly as a piecewise linear function:
+    \begin{equation}
+    T(r) = \begin{cases}
+        a_1 r + b_1, & 0 \leq r \leq r_1 \\
+        a_2 r + b_2, & r_1 \leq r \leq r_2 \\
+        a_3 r + b_3, & r_2 \leq r \leq 255
+    \end{cases}
+    \end{equation}
+    
+    \item Explicitly verify the continuity of $T(r)$ at $r = r_1$ and $r = r_2$ (i.e., check that the segments "fit" without jumps).
+    
+    \item Calculate the output values $s = T(r)$ for:
+    \begin{equation}
+    r = 32, \quad r = 64, \quad r = 100, \quad r = 160, \quad r = 220
+    \end{equation}
+    
+    \item For each of the three segments of the transformation $T(r)$, discuss whether dark, medium, and bright intensities experience compression or expansion of contrast. Explicitly relate your answer to the slope value in each interval and explain how these slopes modify the intensity differences between neighboring pixels in that region.
+\end{enumerate}
+
+\textbf{Solution to Part 1:}
+
+To find the piecewise linear function, we need to determine the slopes and intercepts for each segment. The slopes are calculated from the given points:
+
+\textbf{Slopes:}
+\begin{itemize}
+    \item For Part A ($0 \leq r \leq 64$): $a_1 = \frac{s_1 - 0}{r_1 - 0} = \frac{48 - 0}{64 - 0} = \frac{48}{64} = \frac{3}{4}$
+    \item For Part B ($64 \leq r \leq 160$): $a_2 = \frac{s_2 - s_1}{r_2 - r_1} = \frac{224 - 48}{160 - 64} = \frac{176}{96} = \frac{11}{6}$
+    \item For Part C ($160 \leq r \leq 255$): $a_3 = \frac{255 - s_2}{255 - r_2} = \frac{255 - 224}{255 - 160} = \frac{31}{95}$
+\end{itemize}
+
+\textbf{Intercepts:}
+
+Each segment must pass through its endpoints. We use the point-slope form to find the intercepts:
+
+\begin{itemize}
+    \item \textbf{Part A:} Passes through $(0, 0)$:
+    \begin{align}
+    0 &= a_1 \cdot 0 + b_1 \\
+    b_1 &= 0
+    \end{align}
+    
+    \item \textbf{Part B:} Passes through $(64, 48)$:
+    \begin{align}
+    48 &= \frac{11}{6} \cdot 64 + b_2 \\
+    48 &= \frac{704}{6} + b_2 \\
+    48 &= \frac{352}{3} + b_2 \\
+    b_2 &= 48 - \frac{352}{3} = \frac{144 - 352}{3} = -\frac{208}{3}
+    \end{align}
+    
+    \item \textbf{Part C:} Passes through $(160, 224)$:
+    \begin{align}
+    224 &= \frac{31}{95} \cdot 160 + b_3 \\
+    224 &= \frac{4960}{95} + b_3 \\
+    224 &= \frac{992}{19} + b_3 \\
+    b_3 &= 224 - \frac{992}{19} = \frac{4256 - 992}{19} = \frac{3264}{19}
+    \end{align}
+\end{itemize}
+
+\textbf{Final answer:}
+\begin{equation}
+T(r) = \begin{cases}
+\frac{3}{4}r, & 0 \leq r \leq 64 \\
+\frac{11}{6}r - \frac{208}{3}, & 64 \leq r \leq 160 \\
+\frac{31}{95}r + \frac{3264}{19}, & 160 \leq r \leq 255
+\end{cases}
+\label{eq:piecewise_solution}
+\end{equation}
+
+\textbf{Solution to Part 2:}
+
+To verify continuity at $r = r_1$ and $r = r_2$, we evaluate the function from both sides at each breakpoint and show that the values match.
+
+\textbf{Continuity at $r = r_1 = 64$:}
+
+From the left (Part A):
+\begin{equation}
+T(64) = \frac{3}{4} \cdot 64 = 48
+\end{equation}
+
+From the right (Part B):
+\begin{align}
+T(64) &= \frac{11}{6} \cdot 64 - \frac{208}{3} \\
+&= \frac{704}{6} - \frac{208}{3} \\
+&= \frac{704 - 416}{6} = \frac{288}{6} = 48
+\end{align}
+
+Since both expressions evaluate to 48, the function is continuous at $r = 64$.
+
+\textbf{Continuity at $r = r_2 = 160$:}
+
+From the left (Part B):
+\begin{align}
+T(160) &= \frac{11}{6} \cdot 160 - \frac{208}{3} \\
+&= \frac{1760}{6} - \frac{208}{3} \\
+&= \frac{1760 - 416}{6} = \frac{1344}{6} = 224
+\end{align}
+
+From the right (Part C):
+\begin{align}
+T(160) &= \frac{31}{95} \cdot 160 + \frac{3264}{19} \\
+&= \frac{4960}{95} + \frac{3264}{19} \\
+&= \frac{992}{19} + \frac{3264}{19} = \frac{4256}{19} = 224
+\end{align}
+
+Since both expressions evaluate to 224, the function is continuous at $r = 160$.
+
+Therefore, the piecewise function $T(r)$ is continuous at both breakpoints, confirming that the segments connect without jumps.
+
+\textbf{Solution to Part 3:}
+
+We evaluate $T(r)$ at each given value, using the appropriate segment of the piecewise function:
+
+\begin{itemize}
+    \item \textbf{For $r = 32$:} Since $0 \leq 32 \leq 64$, we use Part A:
+    \begin{align}
+    T(32) &= \frac{3}{4} \cdot 32 = 24
+    \end{align}
+    
+    \item \textbf{For $r = 64$:} This is a boundary point. Using Part A:
+    \begin{align}
+    T(64) &= \frac{3}{4} \cdot 64 = 48
+    \end{align}
+    (We could also use Part B and get the same result, confirming continuity.)
+    
+    \item \textbf{For $r = 100$:} Since $64 \leq 100 \leq 160$, we use Part B:
+    \begin{align}
+    T(100) &= \frac{11}{6} \cdot 100 - \frac{208}{3} \\
+    &= \frac{1100}{6} - \frac{208}{3} \\
+    &= \frac{550}{3} - \frac{208}{3} = \frac{342}{3} = 114
+    \end{align}
+    
+    \item \textbf{For $r = 160$:} This is a boundary point. Using Part B:
+    \begin{align}
+    T(160) &= \frac{11}{6} \cdot 160 - \frac{208}{3} \\
+    &= \frac{1760}{6} - \frac{208}{3} \\
+    &= \frac{880}{3} - \frac{208}{3} = \frac{672}{3} = 224
+    \end{align}
+    (We could also use Part C and get the same result, confirming continuity.)
+    
+    \item \textbf{For $r = 220$:} Since $160 \leq 220 \leq 255$, we use Part C:
+    \begin{align}
+    T(220) &= \frac{31}{95} \cdot 220 + \frac{3264}{19} \\
+    &= \frac{6820}{95} + \frac{3264}{19} \\
+    &= \frac{1364}{19} + \frac{3264}{19} = \frac{4628}{19} \approx 243.58
+    \end{align}
+\end{itemize}
+
+\textbf{Summary of results:}
+\begin{align}
+T(32) &= 24 \\
+T(64) &= 48 \\
+T(100) &= 114 \\
+T(160) &= 224 \\
+T(220) &= \frac{4628}{19} \approx 243.58
+\end{align}
+
+\textbf{Solution to Part 4:}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % Axes
+        \draw[->] (0,0) -- (12,0) node[right] {$r$ (Input gray level)};
+        \draw[->] (0,0) -- (0,12) node[above] {$s$ (Output gray level)};
+        
+        % Axis labels and ticks
+        \foreach \x in {0,64,160,255} {
+            \pgfmathsetmacro{\pos}{\x * 12 / 255}
+            \draw (\pos,0.1) -- (\pos,-0.1) node[below] {\x};
+        }
+        \foreach \y in {0,48,224,255} {
+            \pgfmathsetmacro{\pos}{\y * 12 / 255}
+            \draw (0.1,\pos) -- (-0.1,\pos) node[left] {\y};
+        }
+        
+        % Draw identity line (dashed, for reference)
+        \draw[dashed, gray] (0,0) -- (12,12);
+        
+        % Draw piecewise linear function
+        % Part A: from (0,0) to (64,48)
+        \draw[thick, blue] (0,0) -- (64*12/255,48*12/255);
+        
+        % Part B: from (64,48) to (160,224)
+        \draw[thick, red] (64*12/255,48*12/255) -- (160*12/255,224*12/255);
+        
+        % Part C: from (160,224) to (255,255)
+        \draw[thick, green!70!black] (160*12/255,224*12/255) -- (12,12);
+        
+        % Mark key points
+        \filldraw[blue] (64*12/255,48*12/255) circle (2pt) node[above right] {$(64, 48)$};
+        \filldraw[red] (160*12/255,224*12/255) circle (2pt) node[above right] {$(160, 224)$};
+        \filldraw[black] (0,0) circle (2pt) node[below left] {$(0, 0)$};
+        \filldraw[black] (12,12) circle (2pt) node[above right] {$(255, 255)$};
+        
+        % Labels for segments
+        \node[blue] at (32*12/255,24*12/255) [above] {Part A: $a_1 = 3/4$};
+        \node[red] at (112*12/255,136*12/255) [above] {Part B: $a_2 = 11/6$};
+        \node[green!70!black] at (207.5*12/255,239.5*12/255) [above] {Part C: $a_3 = 31/95$};
+    \end{tikzpicture}
+    \caption{Piecewise linear transformation $T(r)$ showing the three segments with their respective slopes.}
+    \label{fig:piecewise_transformation}
+\end{figure}
+
+To analyze contrast compression or expansion, we compare the input and output ranges for each segment and relate them to the slope values:
+
+\textbf{Part A ($0 \leq r \leq 64$, slope $a_1 = 3/4 = 0.75$):}
+\begin{itemize}
+    \item Input range: $64 - 0 = 64$
+    \item Output range: $48 - 0 = 48$
+    \item Since the output range (48) is smaller than the input range (64), there is \textbf{compression of contrast} for dark intensities.
+    \item The slope $a_1 = 3/4 < 1$ indicates compression: a wider range of input intensities is mapped to a narrower range of output intensities.
+    \item This means that differences between neighboring dark pixels are reduced in the output image, making dark regions appear more uniform.
+\end{itemize}
+
+\textbf{Part B ($64 \leq r \leq 160$, slope $a_2 = 11/6 \approx 1.833$):}
+\begin{itemize}
+    \item Input range: $160 - 64 = 96$
+    \item Output range: $224 - 48 = 176$
+    \item Since the output range (176) is larger than the input range (96), there is \textbf{expansion of contrast} for medium intensities.
+    \item The slope $a_2 = 11/6 > 1$ indicates expansion: a narrower range of input intensities is mapped to a wider range of output intensities.
+    \item This means that differences between neighboring medium-intensity pixels are amplified in the output image, enhancing contrast and making details more visible in this region.
+\end{itemize}
+
+\textbf{Part C ($160 \leq r \leq 255$, slope $a_3 = 31/95 \approx 0.326$):}
+\begin{itemize}
+    \item Input range: $255 - 160 = 95$
+    \item Output range: $255 - 224 = 31$
+    \item Since the output range (31) is smaller than the input range (95), there is \textbf{compression of contrast} for bright intensities.
+    \item The slope $a_3 = 31/95 < 1$ indicates compression: a wider range of input intensities is mapped to a narrower range of output intensities.
+    \item This means that differences between neighboring bright pixels are reduced in the output image, making bright regions appear more uniform.
+\end{itemize}
+
+\textbf{General relationship between slope and contrast:}
+\begin{itemize}
+    \item \textbf{Slope $< 1$:} Compression of contrast. Intensity differences between neighboring pixels are reduced. The transformation maps a wider input range to a narrower output range.
+    \item \textbf{Slope $= 1$:} No change in contrast (identity transformation). Intensity differences are preserved.
+    \item \textbf{Slope $> 1$:} Expansion of contrast. Intensity differences between neighboring pixels are amplified. The transformation maps a narrower input range to a wider output range.
+\end{itemize}
+
+In summary, this piecewise transformation compresses contrast in dark regions (Part A), expands contrast in medium regions (Part B), and compresses contrast in bright regions (Part C), effectively enhancing the visibility of details in the mid-range intensities while reducing contrast in the extremes.
